@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import  PacienteSerializers, ConsultaSerializers,EspecialistaSerializers
+from .serializers import  PacienteSerializers, ConsultaSerializers,EspecialistaSerializers,PacienteViejito
 from .models import  Consulta, Especialista, Paciente
 from django.http import HttpResponse, JsonResponse
 from rest_framework.response import Response
@@ -59,24 +59,21 @@ class PcienteFumador(APIView):
 class PacienteViejo(APIView):
     def get(self,request):
         if request.method == 'GET':
-            PacienteAn = Paciente.objects.filter(Edad = True)
-            serializer = PacienteSerializers(PacienteAn, many=True)
-            Mayores = []
-            for a in PacienteAn:
-                if a < 40:
-                    Mayores.push(a)
-                    return Response(serializer.data, status=status.HTTP_200_OK)
-                    if serializer.is_valid():
-                        serializer.save()
-                        return Response({
-                            'error': False,
-                            'message': "cucho",
-                        }, status=status.HTTP_201_CREATED)
-                    else:
-                        return Response({
-                            'error': True,
-                            'message': "Invalid form",
-                        }, status=status.HTTP_400_BAD_REQUEST)
+            Par = Paciente.objects.all()
+            print(Par)
+            serializer = PacienteSerializers(Par, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({
+                    'error': False,
+                    'message': "cucho",
+                }, status=status.HTTP_201_CREATED)
+            else:
+                return Response({
+                    'error': True,
+                    'message': "Invalid form",
+                }, status=status.HTTP_400_BAD_REQUEST)
 
 
 

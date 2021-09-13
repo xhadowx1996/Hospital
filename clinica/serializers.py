@@ -27,4 +27,11 @@ class EspecialistaSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        return Especialista.objects.create(**validated_data)                                   
+        return Especialista.objects.create(**validated_data) 
+
+
+
+class PacienteViejito(serializers.ModelSerializer):
+    class Meta:
+        model = Paciente
+        fields = ('Edad')                                         
